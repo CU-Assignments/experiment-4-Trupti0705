@@ -1,0 +1,296 @@
+Easy level :-
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Employee {
+    int id;
+    String name;
+    double salary;
+
+    Employee(int id, String name, double salary) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+    }
+    public String toString() {
+        return "ID: " + id + ", Name: " + name + ", Salary: $" + salary;
+    }
+}
+public class EmployeeManager {
+    private ArrayList<Employee> employees;
+
+    public EmployeeManager() {
+        employees = new ArrayList<>();
+    }
+    public void addEmployee(int id, String name, double salary) {
+        employees.add(new Employee(id, name, salary));
+        System.out.println("Employee added.");
+    }
+    public void updateEmployee(int id, String newName, double newSalary) {
+        for (Employee emp : employees) {
+            if (emp.id == id) {
+                emp.name = newName;
+                emp.salary = newSalary;
+                System.out.println("Employee updated.");
+                return;
+            }
+        }
+        System.out.println("Employee with ID " + id + " not found.");
+    }
+
+    public void removeEmployee(int id) {
+        for (Employee emp : employees) {
+            if (emp.id == id) {
+                employees.remove(emp);
+                System.out.println("Employee removed.");
+                return;
+            }
+        }
+        System.out.println("Employee with ID " + id + " not found.");
+    }
+    public void searchEmployee(int id) {
+        for (Employee emp : employees) {
+            if (emp.id == id) {
+                System.out.println("Employee found: " + emp);
+                return;
+            }
+        }
+        System.out.println("Employee with ID " + id + " not found.");
+    }
+    public void displayEmployees() {
+        if (employees.isEmpty()) {
+            System.out.println("No employees found.");
+        } else {
+            System.out.println("Employee List:");
+            for (Employee emp : employees) {
+                System.out.println(emp);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        EmployeeManager manager = new EmployeeManager();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\nEmployee Management System");
+            System.out.println("1. Add Employee");
+            System.out.println("2. Update Employee");
+            System.out.println("3. Remove Employee");
+            System.out.println("4. Search Employee");
+            System.out.println("5. Display All Employees");
+            System.out.println("6. Exit");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); 
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter Employee ID: ");
+                    int addId = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+                    System.out.print("Enter Employee Name: ");
+                    String addName = scanner.nextLine();
+                    System.out.print("Enter Employee Salary: ");
+                    double addSalary = scanner.nextDouble();
+                    manager.addEmployee(addId, addName, addSalary);
+                    break;
+
+                case 2:
+                    System.out.print("Enter Employee ID to update: ");
+                    int updateId = scanner.nextInt();
+                    scanner.nextLine(); 
+                    System.out.print("Enter New Name: ");
+                    String updateName = scanner.nextLine();
+                    System.out.print("Enter New Salary: ");
+                    double updateSalary = scanner.nextDouble();
+                    manager.updateEmployee(updateId, updateName, updateSalary);
+                    break;
+
+                case 3:                   
+                    System.out.print("Enter Employee ID to remove: ");
+                    int removeId = scanner.nextInt();
+                    manager.removeEmployee(removeId);
+                    break;
+
+                case 4:                    
+                    System.out.print("Enter Employee ID to search: ");
+                    int searchId = scanner.nextInt();
+                    manager.searchEmployee(searchId);
+                    break;
+
+                case 5:
+                    manager.displayEmployees();
+                    break;
+
+                case 6:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }}}}
+
+Medium level:- 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Scanner;
+class Card {
+    private String suit;  
+    private String rank; 
+    public Card(String suit, String rank) {
+        this.suit = suit;
+        this.rank = rank;
+    }
+    public String getSuit() {
+        return suit;
+    }
+    public String getRank() {
+        return rank;
+    }
+    public String toString() {
+        return rank + " of " + suit;
+    }
+}
+public class CardCollection {
+    private Collection<Card> cards;
+    public CardCollection() {
+        cards = new ArrayList<>();
+        initializeCards();
+    }
+    private void initializeCards() {
+        String[] suits = {"Hearts", "Diamonds", "Clubs", "Spades"};
+        String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+
+        for (String suit : suits) {
+            for (String rank : ranks) {
+                cards.add(new Card(suit, rank));
+            }
+        }
+    }
+    public void findCardsBySuit(String suit) {
+        boolean found = false;
+        for (Card card : cards) {
+            if (card.getSuit().equalsIgnoreCase(suit)) {
+                System.out.println(card);
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No cards found with the suit: " + suit);
+        }
+    }
+    public void displayAllCards() {
+        if (cards.isEmpty()) {
+            System.out.println("No cards in the collection.");
+        } else {
+            System.out.println("All Cards:");
+            for (Card card : cards) {
+                System.out.println(card);
+            }
+        }
+    }
+    public static void main(String[] args) {
+        CardCollection cardCollection = new CardCollection();
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("\nCard Collection Management");
+            System.out.println("1. Find Cards by Suit");
+            System.out.println("2. Display All Cards");
+            System.out.println("3. Exit");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); 
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter the suit (Hearts, Diamonds, Clubs, Spades): ");
+                    String suit = scanner.nextLine();
+                    cardCollection.findCardsBySuit(suit);
+                    break;
+
+                case 2:
+                    cardCollection.displayAllCards();
+                    break;
+
+                case 3:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            } } } }
+
+Hard level :-
+class TicketBookingSystem {
+    private int availableSeats;
+    public TicketBookingSystem(int totalSeats) {
+        this.availableSeats = totalSeats;
+    }
+    public synchronized boolean bookTicket(String customerType) {
+        if (availableSeats > 0) {
+            availableSeats--;
+            System.out.println(customerType + " booked a seat. Seats remaining: " + availableSeats);
+            return true;
+        } else {
+            System.out.println(customerType + " tried to book a seat, but no seats are available.");
+            return false;
+        }
+    }
+
+    public int getAvailableSeats() {
+        return availableSeats;
+    }
+}
+
+class BookingThread extends Thread {
+    private TicketBookingSystem bookingSystem;
+    private String customerType;
+
+    public BookingThread(TicketBookingSystem bookingSystem, String customerType) {
+        this.bookingSystem = bookingSystem;
+        this.customerType = customerType;
+    }
+    public void run() {
+        if (customerType.equals("VIP")) {
+            System.out.println("VIP customer booking in progress...");
+        }
+        boolean booked = bookingSystem.bookTicket(customerType);
+        if (!booked) {
+            System.out.println(customerType + " couldn't book a seat.");
+        }
+    }
+}
+public class TicketBookingApp {
+    public static void main(String[] args) {
+        TicketBookingSystem bookingSystem = new TicketBookingSystem(5);
+        BookingThread vipBooking1 = new BookingThread(bookingSystem, "VIP");
+        BookingThread regularBooking1 = new BookingThread(bookingSystem, "Regular");
+        BookingThread vipBooking2 = new BookingThread(bookingSystem, "VIP");
+        BookingThread regularBooking2 = new BookingThread(bookingSystem, "Regular");
+        BookingThread vipBooking3 = new BookingThread(bookingSystem, "VIP");
+
+        vipBooking1.setPriority(Thread.MAX_PRIORITY);
+        regularBooking1.setPriority(Thread.NORM_PRIORITY);
+        vipBooking2.setPriority(Thread.MAX_PRIORITY);
+        regularBooking2.setPriority(Thread.NORM_PRIORITY);
+        vipBooking3.setPriority(Thread.MAX_PRIORITY);
+        vipBooking1.start();
+        regularBooking1.start();
+        vipBooking2.start();
+        regularBooking2.start();
+        vipBooking3.start();
+
+        try {
+            vipBooking1.join();
+            regularBooking1.join();
+            vipBooking2.join();
+            regularBooking2.join();
+            vipBooking3.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Booking process completed.");
+    } }
+
+
